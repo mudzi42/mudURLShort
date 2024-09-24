@@ -11,6 +11,7 @@ import (
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/spf13/viper"
 )
 
 // Configuration struct to hold settings
@@ -58,14 +59,21 @@ func main() {
 
 // loadConfig loads configuration settings from environment variables or a config file
 func loadConfig() Config {
-	// In a production environment, you'd likely use a library like Viper or envconfig
-	// to load configuration from environment variables or a config file.
-	// For this example, we'll just hardcode some values.
-	return Config{
-		DBPath:       "./urls.db",
-		ServerPort:   "8080",
-		ShortURLBase: "http://short.url/",
+	viper.SetConfigName("config") // name of config file (without extension)
+	viper.SetConfigType("json")   // Specify JSON format
+	viper.AddConfigPath(".")      // optionally look for config in the working directory
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %w", err))
 	}
+
+	var config Config
+	err = viper.Unmarshal(&config)
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %w", err))
+	}
+
+	return config
 }
 
 // indexHandler handles requests to the root path and renders the index.html template
