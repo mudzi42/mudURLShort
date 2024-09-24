@@ -1,0 +1,5 @@
+{
+    "DBPath": "./urls.db",
+    "ServerPort": "8080",
+    "ShortURLBase": "http://short.url/"
+  }
