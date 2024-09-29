@@ -1,5 +1,5 @@
 {
     "DBPath": "./urls.db",
     "ServerPort": "8080",
-    "ShortURLBase": "http://short.url/"
-  }
+    "ShortURLBase": "http://mudzi.xyz/"
+}
